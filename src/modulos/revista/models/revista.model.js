@@ -4,6 +4,11 @@ const sequelize = require("../../../config/configDB");
 const Revista = sequelize.define(
   "Revista",
   {
+    id: {
+      type: DataTypes.UUID,
+      primaryKey: true,
+      defaultValue: DataTypes.UUIDV4,
+    },
     nome: {
       type: DataTypes.STRING,
       allowNull: false,

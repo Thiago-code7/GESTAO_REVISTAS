@@ -13,7 +13,7 @@ class AutenticacaoMiddleware {
       if (err) {
         return res.status(403).json({ msg: "Token inválido!" });
       }
-
+      console.log("Payload do token:", usuario);
       req.usuario = usuario;
       next();
     });

@@ -1,20 +1,22 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../../../config/configDB");
-const { v4: uuidv4 } = require('uuid');
 
 const Usuario = sequelize.define(
   "Usuario",
   {
     id: {
-      type: DataTypes.STRING,
+      type: DataTypes.UUID,
       primaryKey: true,
-      defaultValue: () => uuidv4(),  // gera UUID no Node
+      defaultValue: DataTypes.UUIDV4, // Geração automática de UUID v4
     },
     nome: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        is: /^[A-Za-zÀ-ÖØ-öø-ÿ\s'-]+$/i,
+        is: {
+          args: /^[A-Za-zÀ-ÖØ-öø-ÿ\s'-]+$/i,
+          msg: "O nome contém caracteres inválidos.",
+        },
       },
     },
     email: {
@@ -41,11 +43,11 @@ const Usuario = sequelize.define(
       },
     },
     papel: {
-      type: DataTypes.ENUM("assinante", "funcionário", "admin"),
+      type: DataTypes.ENUM("assinante", "funcionario", "admin"),
       allowNull: false,
       validate: {
         isIn: {
-          args: [["assinante", "funcionário", "admin"]],
+          args: [["assinante", "funcionario", "admin"]],
           msg: 'O papel deve ser "assinante", "funcionário" ou "admin".',
         },
         notEmpty: {
@@ -55,9 +57,9 @@ const Usuario = sequelize.define(
     },
   },
   {
-    tableName: 'usuario',
-    createdAt: 'criado_em',
-    updatedAt: 'atualizado_em'
+    tableName: "usuario",
+    createdAt: "criado_em",
+    updatedAt: "atualizado_em",
   }
 );
 
