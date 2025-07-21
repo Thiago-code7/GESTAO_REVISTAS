@@ -17,26 +17,27 @@ app.use(cookieParser());
 const usuarioRoutes = require('./src/modulos/usuario/routes/usuario.route');
 const revistaRoutes = require('./src/modulos/revista/routes/revista.route');
 const assinaturaRoutes = require('./src/modulos/assinatura/routes/assinatura.route');
-const autenticacaoRoutes = require('./src/modulos/autenticacao/routes/autenticacao.route');
+const autenticacaoRoutes = require('./src/modulos/autenticacao/routes/autenticacao.route'); // corrigido aqui
 
-app.use('/usuarios', usuarioRoutes);
-app.use('/revistas', revistaRoutes);
+app.use('/usuarios', usuarioRoutes);     
+app.use('/revistas', revistaRoutes);     
 app.use('/assinaturas', assinaturaRoutes);
-app.use('/auth', autenticacaoRoutes);
+app.use('/auth', autenticacaoRoutes);    // corrigido aqui
 
+// Rota simples para testar se API está online
 app.get('/', (req, res) => {
   res.send('API de Assinaturas de Revistas - Online!');
 });
 
-// Sincroniza o banco e só então inicia o servidor
-sequelize.sync({ alter: true })  // ou { force: true } para resetar tabelas (cuidado!)
+// Sincroniza o banco e inicia o servidor
+sequelize.sync({ alter: true })
   .then(() => {
-    console.log('Banco sincronizado');
+    console.log('✅ Banco sincronizado');
     const PORT = process.env.PORT || 5000;
     app.listen(PORT, () => {
-      console.log(`Servidor rodando em http://localhost:${PORT}`);
+      console.log(`🚀 Servidor rodando em http://localhost:${PORT}`);
     });
   })
   .catch(err => {
-    console.error('Erro ao sincronizar o banco:', err);
+    console.error('❌ Erro ao sincronizar o banco:', err);
   });

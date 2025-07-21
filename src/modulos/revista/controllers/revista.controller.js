@@ -82,9 +82,9 @@ const excluirRevista = async (req, res) => {
 };
 
 module.exports = {
+  criarRevista,
   listarRevistas,
   detalharRevista,
-  criarRevista,
   atualizarRevista,
   excluirRevista,
 };
