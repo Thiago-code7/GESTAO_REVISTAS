@@ -18,7 +18,7 @@ class UsuarioController {
       }
 
       // Verifica papel enviado, se válido usa, senão assume "assinante"
-      const papeisValidos = ["assinante", "funcionário", "admin"];
+      const papeisValidos = ["assinante", "funcionario", "admin"];
       const papelFinal = papeisValidos.includes(papel) ? papel : "assinante";
 
       const senhaHash = await bcrypt.hash(senha, 12);
