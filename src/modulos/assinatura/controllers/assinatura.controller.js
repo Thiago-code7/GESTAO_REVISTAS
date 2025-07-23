@@ -1,8 +1,8 @@
 const Assinatura = require('../models/assinatura.model');
 
-module.exports = {
+class AssinaturaController {
   // Listar todas as assinaturas do usuário autenticado
-  async listar(req, res) {
+  static async listar(req, res) {
     try {
       const assinaturas = await Assinatura.findAll({
         where: { usuarioId: req.usuario.id }
@@ -11,10 +11,10 @@ module.exports = {
     } catch (error) {
       res.status(500).json({ erro: "Erro ao listar assinaturas", detalhes: error.message });
     }
-  },
+  }
 
   // Buscar detalhes de uma assinatura específica
-  async buscar(req, res) {
+  static async buscar(req, res) {
     try {
       const { id } = req.params;
       const assinatura = await Assinatura.findByPk(id);
@@ -28,10 +28,10 @@ module.exports = {
     } catch (error) {
       res.status(500).json({ erro: "Erro ao buscar assinatura", detalhes: error.message });
     }
-  },
+  }
 
   // Criar nova assinatura
-  async criar(req, res) {
+  static async criar(req, res) {
     try {
       const novaAssinatura = await Assinatura.create({
         ...req.body,
@@ -41,10 +41,10 @@ module.exports = {
     } catch (error) {
       res.status(400).json({ erro: "Erro ao criar assinatura", detalhes: error.message });
     }
-  },
+  }
 
   // Atualizar uma assinatura existente
-  async atualizar(req, res) {
+  static async atualizar(req, res) {
     try {
       const { id } = req.params;
       const assinatura = await Assinatura.findByPk(id);
@@ -60,10 +60,10 @@ module.exports = {
     } catch (error) {
       res.status(400).json({ erro: "Erro ao atualizar assinatura", detalhes: error.message });
     }
-  },
+  }
 
   // Deletar uma assinatura
-  async deletar(req, res) {
+  static async deletar(req, res) {
     try {
       const { id } = req.params;
       const assinatura = await Assinatura.findByPk(id);
@@ -79,5 +79,7 @@ module.exports = {
     } catch (error) {
       res.status(500).json({ erro: "Erro ao excluir assinatura", detalhes: error.message });
     }
-  },
-};
+  }
+}
+
+module.exports = AssinaturaController;

@@ -14,7 +14,7 @@ router.post("/login", UsuarioController.login);
 router.post(
   "/admin",
   AutenticacaoMiddleware.autenticarToken,
-  AutorizacaoMiddleware.somenteAdmin,
+  AutorizacaoMiddleware.autorizar(['funcionario']),
   UsuarioController.cadastrarAdmin
 );
 

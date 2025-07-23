@@ -13,21 +13,21 @@ router.get('/:id', AutenticacaoMiddleware.autenticarToken, revistaController.det
 // POST /revistas - Criar revista (somente funcionário ou admin)
 router.post('/', 
   AutenticacaoMiddleware.autenticarToken, 
-  AutorizacaoMiddleware.funcionarioOuAdmin, 
+  AutorizacaoMiddleware.autorizar(['funcionario', 'admin']), // ✅ CORRIGIDO
   revistaController.criarRevista
 );
 
 // PUT /revistas/:id - Atualizar revista (somente funcionário ou admin)
 router.put('/:id', 
   AutenticacaoMiddleware.autenticarToken, 
-  AutorizacaoMiddleware.funcionarioOuAdmin, 
+  AutorizacaoMiddleware.autorizar(['funcionario', 'admin']), // ✅ CORRIGIDO
   revistaController.atualizarRevista
 );
 
 // DELETE /revistas/:id - Excluir revista (somente funcionário ou admin)
 router.delete('/:id', 
   AutenticacaoMiddleware.autenticarToken, 
-  AutorizacaoMiddleware.funcionarioOuAdmin, 
+  AutorizacaoMiddleware.autorizar(['funcionario', 'admin']), // ✅ CORRIGIDO
   revistaController.excluirRevista
 );
 
