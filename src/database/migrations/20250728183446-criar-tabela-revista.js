@@ -5,7 +5,7 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable("revista", {
       id: {
-        type: Sequelize.STRING(36),
+        type: Sequelize.CHAR(36),
         defaultValue: Sequelize.UUIDV4,
         primaryKey: true,
       },

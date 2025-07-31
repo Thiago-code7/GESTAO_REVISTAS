@@ -5,12 +5,12 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable("assinatura", {
       id: {
-        type: Sequelize.STRING(36),
+        type: Sequelize.CHAR(36),
         defaultValue: Sequelize.UUIDV4,
         primaryKey: true,
       },
       usuarioId: {
-        type: Sequelize.STRING(36),
+        type: Sequelize.CHAR(36),
         allowNull: false,
         references: {
           model: "usuario",
@@ -19,13 +19,13 @@ module.exports = {
         onUpdate: "CASCADE",
       },
       revistaId: {
-        type: Sequelize.STRING(36),
+        type: Sequelize.CHAR(36),
         allowNull: false,
         references: {
           model: "revista",
           key: "id",
         },
-        onUpdate:"CASCADE"
+        onUpdate: "CASCADE",
       },
       data_inicio: {
         type: Sequelize.DATEONLY,
@@ -43,8 +43,6 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-     await queryInterface.dropTable('assinatura');
+    await queryInterface.dropTable("assinatura");
   },
 };
-
-

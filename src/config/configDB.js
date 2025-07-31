@@ -2,28 +2,27 @@ const { Sequelize } = require('sequelize');
 const dotenv = require('dotenv');
 dotenv.config();
 
-let sequelize;
+const dialect = process.env.DB_DIALECT;
+const logging = process.env.NODE_ENV === 'development';
 
-if (process.env.DB_DIALECT === 'postgres') {
-  sequelize = new Sequelize(
-    process.env.DB_NAME,
-    process.env.DB_USER,
-    process.env.DB_PASSWORD,
-    {
-      host: process.env.DB_HOST,
-      port: process.env.DB_PORT || 5432,
-      dialect: 'postgres',
-      logging: false,
-    }
-  );
-} else if (process.env.DB_DIALECT === 'sqlite') {
-  sequelize = new Sequelize({
-    dialect: 'sqlite',
-    storage: process.env.DB_STORAGE || './db.sqlite',
-    logging: false,
-  });
-} else {
-  throw new Error(`Dialeto de banco não suportado: ${process.env.DB_DIALECT}`);
+if (!['postgres', 'mariadb'].includes(dialect)) {
+  throw new Error(`❌ Dialeto de banco não suportado: ${dialect}. Use 'postgres' ou 'mariadb'.`);
 }
+
+const sequelize = new Sequelize(
+  process.env.DB_DATABASE,
+  process.env.DB_USER,
+  process.env.DB_PASSWORD,
+  {
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    dialect,
+    logging,
+    dialectOptions:
+      dialect === 'postgres'
+        ? { ssl: { require: true, rejectUnauthorized: false } }
+        : {},
+  }
+);
 
 module.exports = sequelize;
